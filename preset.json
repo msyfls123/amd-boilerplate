@@ -1,0 +1,13 @@
+{
+  "react": {
+    "path": "node_modules/react/umd/react.production.min.js",
+    "global": "React"
+  },
+  "react-dom": {
+    "path": "node_modules/react-dom/umd/react-dom.production.min.js",
+    "global": "ReactDOM"
+  },
+  "antd": {
+    "path": "node_modules/antd/dist/antd.min.js"
+  }
+}

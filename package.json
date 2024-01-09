@@ -1,0 +1,40 @@
+{
+  "name": "amd-boilerplate",
+  "version": "1.0.0",
+  "description": "Automation of AMD module compile & config & build.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msyfls123/amd-boilerplate.git"
+  },
+  "keywords": [
+    "gulp",
+    "AMD",
+    "module",
+    "requirejs"
+  ],
+  "author": "msyfls123",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msyfls123/amd-boilerplate/issues"
+  },
+  "homepage": "https://github.com/msyfls123/amd-boilerplate#readme",
+  "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-react": "^7.23.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-rename": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "requirejs": "^2.3.6",
+    "through2": "^4.0.2"
+  },
+  "dependencies": {
+    "antd": "^5.12.8",
+    "dayjs": "^1.11.10"
+  }
+}
