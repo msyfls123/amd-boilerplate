@@ -9,3 +9,5 @@ public/**/*.jsx.js
 
 # config file
 public/config*.js
+public/setup.js
+public/presets.json

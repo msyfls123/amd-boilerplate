@@ -4,10 +4,10 @@ const rename = require('gulp-rename')
 const babel = require('gulp-babel')
 const thirdParty = require('./plugin/third-party')
 const fs = require('fs')
+const path = require('path')
 
 gulp.task('jsx', gulp.parallel(
   () => gulp.src('public/**/*.jsx')
-    .pipe(requireConfig())
     .pipe(babel({
       presets: [[
         '@babel/preset-react',
@@ -25,17 +25,23 @@ gulp.task('jsx', gulp.parallel(
 
 gulp.task('js', () =>
   gulp.src([
-    'public/**/*.js',
+    'public/**/*.{js,jsx}',
     '!public/external/**/*',
     '!public/config*.js',
     '!**/*.jsx.js'
-  ]).pipe(requireConfig())
+  ]).pipe(requireConfig({
+    setupFile: 'public/setup.js',
+    publicDir: path.join(__dirname, 'public'),
+    entry: 'main',
+    presets: JSON.parse(fs.readFileSync('public/presets.json'))
+  }))
 )
 
 gulp.task('third-party', () => {
   return  thirdParty({
-    config: JSON.parse(fs.readFileSync('./preset.json')),
+    config: JSON.parse(fs.readFileSync('./presets.json')),
     publicDir: 'public',
-    configFile: 'public/config-third-party.js'
+    configFile: 'public/config-presets.js',
+    jsonFile: 'public/presets.json'
   })
 })

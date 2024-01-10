@@ -1,4 +1,8 @@
 {
+  "requirejs": {
+    "from": "node_modules/requirejs/require.js",
+    "to": "external/require.js"
+  },
   "react": {
     "from": "node_modules/react/umd/react.production.min.js",
     "to": "external/react.production.min.js",
@@ -12,5 +16,9 @@
   "antd": {
     "from": "node_modules/antd/dist/antd.min.js",
     "to": "external/antd.min.js"
+  },
+  "dayjs": {
+    "from": "node_modules/dayjs/dayjs.min.js",
+    "to": "external/dayjs.min.js"
   }
 }

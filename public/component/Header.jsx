@@ -1,9 +1,13 @@
 define(
-  'jsx!component/Header',
+  'component/Header.jsx',
   ['react', 'antd'],
   function (React, antd) {
-    return <header>
-      header
-    </header>
+    const { Button } = antd
+    return () => (
+      <header>
+        header
+        <Button type="primary">Primary Button</Button>
+      </header>
+    )
   }
 )
