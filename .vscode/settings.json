@@ -8,7 +8,7 @@
   "requireModuleSupport.pluginExtensions": {
     "jsx": ".jsx"
   },
-  "requireModuleSupport.configFile": "config/require.js",
+  "requireModuleSupport.configFile": "public/config-third-party.js",
   "requireModuleSupport.cutFileCompletionExtensions": [
       "jsx"
   ]

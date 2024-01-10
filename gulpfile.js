@@ -2,8 +2,10 @@ const gulp = require('gulp')
 const requireConfig = require('./plugin/require-config')
 const rename = require('gulp-rename')
 const babel = require('gulp-babel')
+const thirdParty = require('./plugin/third-party')
+const fs = require('fs')
 
-gulp.task('js', gulp.parallel(
+gulp.task('jsx', gulp.parallel(
   () => gulp.src('public/**/*.jsx')
     .pipe(requireConfig())
     .pipe(babel({
@@ -19,6 +21,21 @@ gulp.task('js', gulp.parallel(
       }
     }))
     .pipe(gulp.dest('public')),
-  () => gulp.src('public/**/*.js')
-    .pipe(requireConfig()),
 ))
+
+gulp.task('js', () =>
+  gulp.src([
+    'public/**/*.js',
+    '!public/external/**/*',
+    '!public/config*.js',
+    '!**/*.jsx.js'
+  ]).pipe(requireConfig())
+)
+
+gulp.task('third-party', () => {
+  return  thirdParty({
+    config: JSON.parse(fs.readFileSync('./preset.json')),
+    publicDir: 'public',
+    configFile: 'public/config-third-party.js'
+  })
+})

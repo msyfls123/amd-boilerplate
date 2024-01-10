@@ -1,4 +1,11 @@
 node_modules/
 dist/
 
+# third party modules
+public/external/
+
+# compiled jsx
 public/**/*.jsx.js
+
+# config file
+public/config*.js
