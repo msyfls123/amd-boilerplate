@@ -4,6 +4,7 @@ const madge = require('madge')
 module.exports = function() {
   return through.obj(async function(file, encoding, callback) {
     const dependencies = await madge(file.path, {
+      baseDir: 'public',
       includeNpm: true,
       fileExtensions: ['js', 'jsx'],
       requireConfig: 'public/config-third-party.js'
