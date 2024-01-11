@@ -8,6 +8,6 @@ public/external/
 public/**/*.jsx.js
 
 # config file
-public/config*.js
-public/setup.js
+public/presets.js
 public/presets.json
+public/setup.js

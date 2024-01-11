@@ -6,8 +6,20 @@ const thirdParty = require('./plugin/third-party')
 const fs = require('fs')
 const path = require('path')
 
+const ALL_JS_SOURCE_PATTERN = [
+  'public/**/*.{js,jsx}',
+  '!public/external/**/*',
+  '!public/presets.js',
+  '!public/setup.js',
+  '!**/*.jsx.js'
+]
+
+const ALL_JSX_PATTERN = [
+  'public/**/*.jsx'
+]
+
 gulp.task('jsx', gulp.parallel(
-  () => gulp.src('public/**/*.jsx')
+  () => gulp.src(ALL_JSX_PATTERN)
     .pipe(babel({
       presets: [[
         '@babel/preset-react',
@@ -23,13 +35,8 @@ gulp.task('jsx', gulp.parallel(
     .pipe(gulp.dest('public')),
 ))
 
-gulp.task('js', () =>
-  gulp.src([
-    'public/**/*.{js,jsx}',
-    '!public/external/**/*',
-    '!public/config*.js',
-    '!**/*.jsx.js'
-  ]).pipe(requireConfig({
+gulp.task('setup', () =>
+  gulp.src(ALL_JS_SOURCE_PATTERN).pipe(requireConfig({
     setupFile: 'public/setup.js',
     publicDir: path.join(__dirname, 'public'),
     entry: 'main',
@@ -37,11 +44,16 @@ gulp.task('js', () =>
   }))
 )
 
-gulp.task('third-party', () => {
+gulp.task('presets', () => {
   return  thirdParty({
     config: JSON.parse(fs.readFileSync('./presets.json')),
     publicDir: 'public',
-    configFile: 'public/config-presets.js',
+    configFile: 'public/presets.js',
     jsonFile: 'public/presets.json'
   })
 })
+
+gulp.task('watch', gulp.parallel(
+  function watchJSX () { return gulp.watch(ALL_JSX_PATTERN, gulp.task('jsx')) },
+  function watchJS () { return gulp.watch(ALL_JS_SOURCE_PATTERN, gulp.task('setup')) }
+))

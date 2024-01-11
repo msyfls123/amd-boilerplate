@@ -18,18 +18,21 @@ module.exports = function(options) {
   const config = { ...presets }
 
   return through.obj(function(file, encoding, callback) {
-    madge(file.path, {
-      baseDir: 'public',
-      includeNpm: true,
-      fileExtensions: ['js', 'jsx'],
-      requireConfig: 'public/config-presets.js'
-    }).then((dependencies) => {
-      debug({
-        path: file.path,
-        tree: dependencies.tree,
-        skipped: dependencies.skipped
+    if (process.env.DEBUG) {
+      madge(file.path, {
+        baseDir: 'public',
+        includeNpm: true,
+        fileExtensions: ['js', 'jsx'],
+        requireConfig: 'public/presets.js'
+      }).then((dependencies) => {
+        debug({
+          path: file.path,
+          tree: dependencies.tree,
+          skipped: dependencies.skipped
+        })
       })
-    })
+    }
+    
     const { key, value } = createPathPair(file.path, publicDir)
     config[key] = value
     callback(null, file)
@@ -37,8 +40,10 @@ module.exports = function(options) {
     fs.writeFileSync(
       setupFile,
       `require.config({
-paths: ${JSON.stringify(config, null, 2)}
-});require(['${entry}'])`,
+  enforceDefine: true,
+  paths: ${JSON.stringify(config, null, 4)}
+});
+define('setup', ['${entry}'], function() {});`,
       { encoding: 'utf-8' },
     )
     debug('flushed')
