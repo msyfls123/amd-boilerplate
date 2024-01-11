@@ -18,7 +18,7 @@ const ALL_JSX_PATTERN = [
   'public/**/*.jsx'
 ]
 
-gulp.task('jsx', gulp.parallel(
+gulp.task('jsx', (
   () => gulp.src(ALL_JSX_PATTERN)
     .pipe(babel({
       presets: [[
@@ -32,7 +32,7 @@ gulp.task('jsx', gulp.parallel(
         extname: '.jsx.js'
       }
     }))
-    .pipe(gulp.dest('public')),
+    .pipe(gulp.dest('public'))
 ))
 
 gulp.task('setup', () =>
@@ -56,4 +56,12 @@ gulp.task('presets', () => {
 gulp.task('watch', gulp.parallel(
   function watchJSX () { return gulp.watch(ALL_JSX_PATTERN, gulp.task('jsx')) },
   function watchJS () { return gulp.watch(ALL_JS_SOURCE_PATTERN, gulp.task('setup')) }
+))
+
+gulp.task('default', gulp.series(
+  gulp.task('presets'),
+  gulp.parallel(
+    gulp.task('jsx'),
+    gulp.task('setup')
+  )
 ))
